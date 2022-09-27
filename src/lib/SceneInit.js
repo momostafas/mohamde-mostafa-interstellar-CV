@@ -24,6 +24,10 @@ export default class SceneInit {
     // NOTE: Lighting is basically required.
     this.ambientLight = undefined;
     this.directionalLight = undefined;
+    this.enduranceLight = undefined;
+    let ticking = false;
+
+    this.starGeo = undefined;
   }
 
   initialize() {
@@ -34,14 +38,12 @@ export default class SceneInit {
       1,
       1000
     );
-    this.camera.position.z = 48;
+    this.camera.position.set(0,500,48);
 
     // NOTE: Specify a canvas which is already created in the HTML.
     const canvas = document.getElementById(this.canvasId);
     this.renderer = new THREE.WebGLRenderer({
       canvas,
-      // NOTE: Anti-aliasing smooths out the edges.
-      antialias: true,
     });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     // this.renderer.shadowMap.enabled = true;
@@ -58,24 +60,37 @@ export default class SceneInit {
     this.scene.add(this.ambientLight);
 
     // directional light - parallel sun rays
-    this.directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+    this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
     // this.directionalLight.castShadow = true;
-    this.directionalLight.position.set(0, 32, 64);
+    this.directionalLight.position.set(0, 0, 50);
     this.scene.add(this.directionalLight);
+
+
+   this.starGeo = new THREE.BufferGeometry();
+    const positions = [];
+
+    for(let i=0;i<6000;i++) {
+    
+      positions.push(Math.random() * 600 - 300) ;
+      positions.push(Math.random() * 600 - 300)  ;
+      positions.push(Math.random() * 600 - 300)  ;
+  
+    }
+    this.starGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
+
+    let sprite = new THREE.TextureLoader().load('../../assets/images/circle.png');
+    let starMaterial = new THREE.PointsMaterial({
+      color: 0xaaaaaa,
+      size: 0.7,
+      map: sprite,
+    });
+
+   let  stars = new THREE.Points(this.starGeo, starMaterial);
+    this.scene.add(stars);
+
 
     // if window resizes
     window.addEventListener('resize', () => this.onWindowResize(), false);
-
-    // NOTE: Load space background.
-    // this.loader = new THREE.TextureLoader();
-    // this.scene.background = this.loader.load('./pics/space.jpeg');
-
-    // NOTE: Declare uniforms to pass into glsl shaders.
-    // this.uniforms = {
-    //   u_time: { type: 'f', value: 1.0 },
-    //   colorB: { type: 'vec3', value: new THREE.Color(0xfff000) },
-    //   colorA: { type: 'vec3', value: new THREE.Color(0xffffff) },
-    // };
   }
 
   animate() {
@@ -84,7 +99,8 @@ export default class SceneInit {
     window.requestAnimationFrame(this.animate.bind(this));
     this.render();
     this.stats.update();
-    this.controls.update();
+ 
+    this.starGeo.verticesNeedUpdate = true; 
   }
 
   render() {
