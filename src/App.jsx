@@ -104,10 +104,10 @@ function App() {
     m.defines = {"USE_UV" : ""};
     var o = new THREE.Mesh(g, m);
     test.scene.add(o);
-    const geometry = new THREE.CylinderGeometry(34, 34, 10, 20, 4, true);
+    const geometry = new THREE.CylinderGeometry(32, 32, 10, 20, 4, true);
 
     const cylinder = new THREE.Mesh(geometry, m);
-    cylinder.position.set(-50, 8, -153);
+    cylinder.position.set(-50, 8, -140);
     cylinder.rotateX(10);
 
     cylinder.rotateY(11);
