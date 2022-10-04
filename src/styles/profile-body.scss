@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+.profile-body {
+  display: none;
+  &_main-info {
+    display: block;
+    position: absolute;
+    top: calc(50% - 220px);
+    left: 10%;
+    background-color: #000;
+    background-image: // skeuomorphism anyone?
+      radial-gradient(rgba(#fff, 0.125), rgba(#fff, 0)),
+      linear-gradient(to bottom, #000, #000 2px, #111 3px);
+    background-repeat: repeat-y;
+    background-position: center center;
+    background-size: cover, 100% 3px;
+    box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #17a2b8, 0 0 0.8rem #17a2b8, 0 0 2.8rem #17a2b8, inset 0 0 1.3rem #17a2b8;
+    border-radius: 20px;
+    z-index: 1000;
+    color: #3f3; // hacker green
+    // font-family: 'VT323', monospace;
+    width: 80vw;
+    height: 400px;
+    font-size: 30px;
+    font-weight: bold;
+
+    &_image {
+      height: 250pt;
+      float: right;
+      // box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #17a2b8, 0 0 0.8rem #17a2b8, 0 0 2.8rem #17a2b8, inset 0 0 1.3rem #17a2b8;
+      // border-radius: 20%;
+    }
+
+    &_text {
+      font-family: 'Share Tech Mono', monospace;
+      color: #ffffff;
+      text-align: left;
+      color: #daf6ff;
+      text-shadow: 0 0 20px rgba(10, 175, 230, 1),  0 0 20px rgba(10, 175, 230, 0);
+      &_timer {
+          letter-spacing: 0.05em;
+          font-size: 80px;
+          padding: 5px 0;
+      }
+      &_header {
+          letter-spacing: 0.1em;
+          font-size: 24px;
+      
+      }
+      &_description {
+          letter-spacing: 0.1em;
+          font-size: 12px;
+          padding: 20px 0 0;
+      } 
+      &_description_date {
+            font-size: 12px;
+            font-weight: bold;
+          }
+    }
+
+    &_image-colored {
+      filter: grayscale(0%);
+    }
+
+    &_social-icons {
+      visibility: hidden;
+    }
+  }
+
+  &_work-items {
+    @extend .profile-body_main-info;
+    background: #0f3854;
+    background: radial-gradient(ellipse at center,  #0a2e38  0%, #000000 70%);
+  }
+
+  
+}
+
+.container {
+  width: 85%;
+  margin: 0 auto;
+}
+

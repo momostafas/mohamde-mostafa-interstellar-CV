@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+.profile-body {
+  display: none;
+}
+.profile-body_main-info, .profile-body_work-items {
+  display: block;
+  position: absolute;
+  top: calc(50% - 220px);
+  left: 10%;
+  background-color: #000;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.125), rgba(255, 255, 255, 0)), linear-gradient(to bottom, #000, #000 2px, #111 3px);
+  background-repeat: repeat-y;
+  background-position: center center;
+  background-size: cover, 100% 3px;
+  box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #17a2b8, 0 0 0.8rem #17a2b8, 0 0 2.8rem #17a2b8, inset 0 0 1.3rem #17a2b8;
+  border-radius: 20px;
+  z-index: 1000;
+  color: #3f3;
+  width: 80vw;
+  height: 400px;
+  font-size: 30px;
+  font-weight: bold;
+}
+.profile-body_main-info_image {
+  height: 250pt;
+  float: right;
+}
+.profile-body_main-info_text {
+  font-family: "Share Tech Mono", monospace;
+  color: #ffffff;
+  text-align: left;
+  color: #daf6ff;
+  text-shadow: 0 0 20px rgb(10, 175, 230), 0 0 20px rgba(10, 175, 230, 0);
+}
+.profile-body_main-info_text_timer {
+  letter-spacing: 0.05em;
+  font-size: 80px;
+  padding: 5px 0;
+}
+.profile-body_main-info_text_header {
+  letter-spacing: 0.1em;
+  font-size: 24px;
+}
+.profile-body_main-info_text_description {
+  letter-spacing: 0.1em;
+  font-size: 12px;
+  padding: 20px 0 0;
+}
+.profile-body_main-info_text_description_date {
+  font-size: 12px;
+  font-weight: bold;
+}
+.profile-body_main-info_image-colored {
+  filter: grayscale(0%);
+}
+.profile-body_main-info_social-icons {
+  visibility: hidden;
+}
+.profile-body_work-items {
+  background: #0f3854;
+  background: radial-gradient(ellipse at center, #0a2e38 0%, #000000 70%);
+}
+
+.container {
+  width: 85%;
+  margin: 0 auto;
+}/*# sourceMappingURL=profile-body.css.map */
