@@ -102,19 +102,19 @@ function App() {
     const achievements = [
       {
         title: '',
-        images: ['mohamed-mostafa.JPG', 'img2.JPG', 'img3.JPG'],
+        images: ['gp.png'],
       },
       {
         title: '',
-        images: ['img2.JPG'],
+        images: ['gp.png'],
       },
       {
         title: '',
-        images: ['img3.JPG'],
+        images: ['gp.png'],
       },
       {
         title: '',
-        images: ['img4.jpg'],
+        images: ['gp.png'],
       },
     ];
 
@@ -125,8 +125,22 @@ function App() {
     let tesseractTexture = new THREE.TextureLoader().load(
       '../../assets/tesseract/textures/material.png'
     );
+
+    let tesseractTextures = achievements.map(item => {
+      let itemTexture = new THREE.TextureLoader().load(
+        `../../assets/images/${item.images[0]}}`
+      );
+      let itemMaterial = new THREE.MeshPhongMaterial({
+        map: itemTexture,
+      });
+      return itemMaterial;
+    }); 
+
     let tesseractBoxMaterial = new THREE.MeshPhongMaterial({
       map: tesseractTexture,
+    });
+    let tesseractBoxMaterial2 = new THREE.MeshBasicMaterial({
+      color: '0x223355'
     });
 
     glftLoader.load('./assets/shiba/scene.gltf', (gltfScene) => {
@@ -138,12 +152,18 @@ function App() {
       main.scene.add(endurance);
     });
 
-    const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
-   
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      1.5,
+      0.4,
+      0.85
+    );
 
     function createTesseractUnit(faces, boxWidth, boxHeight) {
+      var item = items[Math.floor(Math.random()*items.length)];
+
       let BoxGeometry = new THREE.BoxGeometry(boxWidth, boxHeight, 0);
-      const box = new THREE.Mesh(BoxGeometry, tesseractBoxMaterial);
+      const box = new THREE.Mesh(BoxGeometry, tesseractTextures[0]);
       let TesseractUnitGroup = new THREE.Group();
       for (let index = 1; index < faces + 1; index++) {
         const unitWall = new THREE.Mesh(BoxGeometry, tesseractBoxMaterial);
@@ -162,6 +182,7 @@ function App() {
         );
         TesseractUnitGroup.add(unitWall);
       }
+      TesseractUnitGroup.add(box);
       return TesseractUnitGroup;
     }
 
@@ -229,74 +250,50 @@ function App() {
       let imageMAterial = new THREE.MeshPhongMaterial({
         map: imageTexture,
       });
-      let ImageGeometry = new THREE.BoxGeometry(10, 10, 0);
+      let ImageGeometry = new THREE.BoxGeometry(20, 20, 0);
       const box = new THREE.Mesh(ImageGeometry, imageMAterial);
       return box;
     }
 
     function animateImage(image, position, i, j, l) {
-      if (i % 2) {
-        image.rotation.y = Math.PI / 2;
-        if (i < 2) {
-          image.position.x = position.x + (150 * j);
+      image.rotation.y = i % 2 ? Math.PI / 2 : 0;
+      image.position.x =
+        i % 2 ? (i < 2 ? position.x + 30 : position.x - 30) : image.position.x;
+      image.position.z =
+        i % 2 ? image.position.z : i < 2 ? position.z + 30 : position.z - 30;
+    }
 
-          setInterval(() => {
-            if (image.position.x > position.x + 30) {
-              image.position.x = image.position.x - 0.1;
-            } else {
-              image.position.x = position.x + (150 * l);
-            }
-          }, 1);
-        } else {
-          image.position.x = position.x - (150 * j);
+    function createBlackHole(r) {
+      const ringGeometry = new THREE.RingGeometry(r, 30, 30);
+      let sunTexture = new THREE.TextureLoader().load(
+        `../../assets/textures/sun.png`
+      );
+      let sunMaterial = new THREE.MeshPhongMaterial({
+        map: sunTexture,
+        side: THREE.DoubleSide,
+      });
+  
+      const sphereGeometry = new THREE.SphereGeometry(r, 30, 30);
+      const halfsphereGeometry = new THREE.SphereGeometry(r, 90, 90, 4.6, 3, );
+      const sphereMaterial = new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        side: THREE.DoubleSide,
+      });
+      const ring = new THREE.Mesh(ringGeometry, sunMaterial);
+      const ring2 = new THREE.Mesh(ringGeometry, sunMaterial);
+      const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+      const halfsphere = new THREE.Mesh(halfsphereGeometry, sunMaterial);
+      ring2.rotation.y += (80  * Math.PI) / 180 ;
+      let group = new THREE.Group();
+      group.rotation.z += Math.PI / 2;
 
-          setInterval(() => {
-            if (image.position.x < position.x - 30) {
-              image.position.x = image.position.x + 0.1;
-            } else {
-              image.position.x = position.x - (150 * l);
-            }
-          }, 1);
-        }
-      } else {
-        if (i < 2) {
-          image.position.z = position.z + (150*j);
-
-          setInterval(() => {
-            if (image.position.z > position.z + 30) {
-              image.position.z -= 0.4;
-              image.rotation.z -= j% 2 ? 0.0003 : -0.0003;
-
-            } else {
-              const imginterval =  setInterval(() => {
-                image.position.y -= 0.01;
-                image.rotation.z -= 0.001;
-              }, 1);
-              setTimeout(() => {
-                clearInterval(imginterval);
-                image.position.z = position.z + (150 * l);
-                image.position.y = position.y + 500;
-                image.rotation.z =  0;
-              }, 500);
-            }
-          }, 1);
-        } else {
-          image.position.z = position.z - (150*j);
-
-          setInterval(() => {
-            if (image.position.z < position.z - 30) {
-              image.position.z += 0.1;
-            } else {
-              image.position.z = position.z - (150 * l);
-            }
-          }, 1);
-        }
-      }
+      group.add(ring, ring2, sphere, halfsphere)
+      return group;
     }
 
     let item = createFullTesseract(2, 20);
     main.scene.add(item);
-    item.position.set(0,500,0)
+    item.position.set(0, 500, 0);
     const coreItem = item.children.filter((i) => i.name == 'core')[0];
 
     function sumPositions(...objs) {
@@ -307,7 +304,7 @@ function App() {
         return a;
       }, {});
     }
-    
+
     achievements.forEach((story, i) => {
       story.images.forEach((image, j) => {
         const imgBox = addTesseractImage(image);
@@ -318,55 +315,78 @@ function App() {
         );
         main.scene.add(imgBox);
         animateImage(imgBox, coreItem.position, i, j + 1, story.images.length);
-      })
+      });
     });
 
-    
 
-    const axesHelper = new THREE.AxesHelper(500);
-    axesHelper.position.set(0, 500, 0);
-    main.scene.add(axesHelper);
+    let blackhole = createBlackHole(20);
+    blackhole.position.set(0, 100, 0);
+    main.scene.add(blackhole);
 
     window.addEventListener(
       'wheel',
       async function (e) {
-        // if (e.deltaY > 0 && itemIndex < items.length - 1 && !scrolling) {
-        //   //scrolling down
-        //   scrolling = true;
-        //   $('#profile-body').fadeOut();
-        //   itemIndex++;
-        //   if (itemIndex == 0) {
-        //     await reachEndurance();
-        //     showRectangle(items[itemIndex]);
-        //   } else {
-        //     if (items[itemIndex - 1].animation != 'none') {
-        //       await playAnimation(saluteAction).then(() => {
-        //           moveForward().then(() => {
-        //           showRectangle(items[itemIndex]);
-        //         });
-        //       });
-        //     }
-        //     else {
-        //       await moveForward();
-        //       showRectangle(items[itemIndex]);
-        //     }
-        //   }
-        // } else if (e.deltaY < 0 && itemIndex > 0 && !scrolling) {
-        //   scrolling = true;
-        //   $('#profile-body').fadeOut();
-        //   itemIndex--;
-        //   if (items[itemIndex].animation != 'none') {
-        //     await moveBackward().then(() => {
-        //       playAnimation(saluteAction).then(() => {
-        //       showRectangle(items[itemIndex]);
-        //     });
-        //   });
-        //   }
-        //   else {
-        //     await moveBackward();
-        //     showRectangle(items[itemIndex])
-        //   };
-        // }
+        if (itemIndex < items.length - 1) {
+          if (e.deltaY > 0 && !scrolling) {
+            //scrolling down
+            scrolling = true;
+            $('#profile-body').fadeOut();
+            itemIndex++;
+            if (itemIndex == 0) {
+              await reachEndurance();
+              showRectangle(items[itemIndex]);
+            } else {
+              if (items[itemIndex - 1].animation != 'none') {
+                await playAnimation(saluteAction).then(() => {
+                  moveForward().then(() => {
+                    showRectangle(items[itemIndex]);
+                  });
+                });
+              } else {
+                await moveForward();
+                showRectangle(items[itemIndex]);
+              }
+            }
+          } else if (e.deltaY < 0 && itemIndex > 0 && !scrolling) {
+            scrolling = true;
+            $('#profile-body').fadeOut();
+            itemIndex--;
+            if (items[itemIndex].animation != 'none') {
+              await moveBackward().then(() => {
+                playAnimation(saluteAction).then(() => {
+                  showRectangle(items[itemIndex]);
+                });
+              });
+            } else {
+              await moveBackward();
+              showRectangle(items[itemIndex]);
+            }
+          }
+        } else {
+          if (e.deltaY > 0 && !scrolling ) {
+            scrolling = true;
+            $('#profile-body').fadeOut();
+            if (itemIndex == items.length - 1) {
+              await reachBlackHole();
+              scrolling = false;
+              itemIndex++;
+              console.log('sc', scrolling, itemIndex);
+
+
+            }
+            else  {
+              console.log('ok');
+             await moveForwardTesseract(itemIndex - items.length);
+             console.log('ok');
+             scrolling = false;
+             itemIndex++;
+
+
+            }
+          }
+          
+          
+        }
       },
       true
     );
@@ -450,6 +470,34 @@ function App() {
       });
     }
 
+    function moveForwardTesseract(num) {
+      return new Promise((resolve, reject) => {
+        const tweenInterval = setInterval(() => {
+          var astronautRotation = new TWEEN.Tween(astronautScene.rotation)
+            .to(
+              {
+                y: (Math.PI  / 2) * (num +1),
+              },
+              3
+            )
+            .start();
+          var camRotation = new TWEEN.Tween(main.camera.rotation)
+            .to(
+              {
+                y: (Math.PI  / 2) * (num +1),
+              },
+              3
+            )
+            .start();
+  
+        }, 1);
+        setTimeout(() => {
+          clearInterval(tweenInterval);
+          resolve(true);
+        }, 3000);
+      });
+    }
+
     function showRectangle(item) {
       $('#profile-body_main-info_text_header').text(item.position);
       $('#profile-body_main-info_text_description').text(item.description);
@@ -460,8 +508,77 @@ function App() {
     }
 
     function calculateArmyDays() {}
+
+    function reachBlackHole() {
+      return new Promise((resolve, reject) => {
+        const tweenInterval = setInterval(() => {
+          var astronautMovment = new TWEEN.Tween(astronautScene.position)
+            .to(
+              {
+                x: 0,
+                y: 100,
+                z: 20,
+              },
+              5
+            )
+            .start();
+
+          var cameraMovement = new TWEEN.Tween(main.camera.position)
+            .to(
+              {
+                x: 0,
+                y: 100,
+                z: 60,
+              },
+              5
+            )
+            .start();
+
+          TWEEN.update();
+        }, 1);
+
+        setTimeout(() => {
+          
+          clearInterval(tweenInterval);
+          let tweenInterval2 = setInterval(() => {
+            var astronautMovment = new TWEEN.Tween(astronautScene.position)
+              .to(
+                {
+                  x: 30,
+                  y: 610,
+                  z: 30,
+                },
+                3
+              )
+              .start();
+  
+            var cameraMovement = new TWEEN.Tween(main.camera.position)
+              .to(
+                {
+                  x: 30,
+                  y: 620,
+                  z: 50,
+                },
+                3
+              )
+              .start();
+
+              main.camera.rotateY += 1;
+              astronautScene.rotateY += 1;
+  
+            TWEEN.update();
+          }, 1);
+          setTimeout(() => {
+            clearInterval(tweenInterval);
+            
+            resolve(true);
+          }, 4000);
+        }, 6000);
+      });
+    }
+
     const loader = new FBXLoader();
-    loader.load('./assets/astronaut/main.fbx', function (astronaut) {
+    loader.load('./assets/astronaut/test.fbx', function (astronaut) {
       loader.load('./assets/astronaut/Salute.fbx', function (salute) {
         loader.load('./assets/astronaut/Flying.fbx', function (flying) {
           astronautScene = astronaut;

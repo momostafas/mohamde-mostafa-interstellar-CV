@@ -38,8 +38,8 @@ export default class SceneInit {
       1,
       1000
     );
-    this.camera.position.set(30,620,30);
-    this.camera.rotation.y -= Math.PI;
+    this.camera.position.set(30,610, 50);
+    // this.camera.rotation.y -= Math.PI / 2;
 
 
     // NOTE: Specify a canvas which is already created in the HTML.
@@ -116,3 +116,4 @@ export default class SceneInit {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 }
+  
