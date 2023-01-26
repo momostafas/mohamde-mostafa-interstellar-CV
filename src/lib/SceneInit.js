@@ -24,10 +24,12 @@ export default class SceneInit {
     // NOTE: Lighting is basically required.
     this.ambientLight = undefined;
     this.directionalLight = undefined;
+    this.directionalLightTars = undefined;
     this.enduranceLight = undefined;
-    let ticking = false;
 
     this.starGeo = undefined;
+
+
   }
 
   initialize() {
@@ -38,7 +40,7 @@ export default class SceneInit {
       1,
       1000
     );
-    this.camera.position.set(30,610, 50);
+    this.camera.position.set(0, 0, 50);
     // this.camera.rotation.y -= Math.PI / 2;
 
 
@@ -65,6 +67,13 @@ export default class SceneInit {
     // this.directionalLight.castShadow = true;
     this.directionalLight.position.set(0, 0, 50);
     this.scene.add(this.directionalLight);
+
+    
+    // directional light - parallel sun rays
+    this.directionalLightTars = new THREE.DirectionalLight(0xffffff, 1);
+    // this.directionalLight.castShadow = true;
+    this.directionalLightTars.position.set(0, -800, 50);
+    this.scene.add(this.directionalLightTars);
 
 
    this.starGeo = new THREE.BufferGeometry();
@@ -115,5 +124,6 @@ export default class SceneInit {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
+
 }
   

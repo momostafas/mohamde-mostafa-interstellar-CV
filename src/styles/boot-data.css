@@ -1,0 +1,167 @@
+@charset "UTF-8";
+@-webkit-keyframes blink-caret {
+  50% {
+    color: black;
+  }
+}
+@keyframes blink-caret {
+  50% {
+    color: black;
+  }
+}
+* {
+  box-sizing: unset !important;
+}
+
+.boot-data {
+  color: #7b7b7b;
+  font-size: 20px;
+  font-family: cursive;
+}
+.boot-data .DetectingIDE {
+  margin-left: 30px;
+}
+.boot-data .DetectingIDE tbody tr td:nth-child(1) {
+  width: 340px;
+}
+.boot-data .DetectingIDE tbody tr td:nth-child(2) {
+  width: 70px;
+}
+.boot-data-second-page {
+  display: none;
+  margin-top: 30px;
+}
+.boot-data-second-page-system-configurations-table {
+  border: white double 4px;
+  padding: 10px;
+}
+.boot-data-second-page-system-configurations-table table {
+  table-layout: auto;
+  width: 100%;
+}
+.boot-data-second-page-device-table {
+  margin-top: 100px;
+  padding: 10px;
+}
+.boot-data-second-page-device-table table {
+  table-layout: auto;
+  width: 100%;
+}
+.boot-data-second-page-device-table-blink_char {
+  -webkit-animation: blink-caret 1s infinite;
+          animation: blink-caret 1s infinite;
+}
+.boot-data-windows {
+  display: none;
+  color: #fff;
+}
+.boot-data-windows .window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+.boot-data-windows .window .microsoft-logo {
+  width: 160px;
+  height: 168px;
+}
+.boot-data-windows .window .square {
+  width: 75px;
+  height: 75px;
+  margin: 0 5px 5px 0;
+  float: left;
+}
+.boot-data-windows .window .square.red {
+  background-color: #f35325;
+}
+.boot-data-windows .window .square.green {
+  background-color: #81bc06;
+}
+.boot-data-windows .window .square.blue {
+  background-color: #05a6f0;
+}
+.boot-data-windows .window .square.yellow {
+  background-color: #ffba08;
+}
+.boot-data-windows .container {
+  margin-top: 30px;
+  width: 150px;
+  height: 10px;
+  border: 2px solid #b2b2b2;
+  border-radius: 7px;
+  margin: 0 auto;
+  padding: 2px 1px;
+  overflow: hidden;
+  font-size: 0;
+}
+.boot-data-windows .windows-box {
+  width: 9px;
+  height: 100%;
+  background: linear-gradient(to bottom, #2838c7 0%, #5979ef 17%, #869ef3 32%, #869ef3 45%, #5979ef 59%, #2838c7 100%);
+  display: inline-block;
+  margin-right: 2px;
+  -webkit-animation: loader 2s infinite;
+          animation: loader 2s infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  box-sizing: unset;
+}
+.boot-data-windows .logo2 {
+  width: 220px;
+  margin: 50px auto;
+}
+.boot-data-windows .logo2 p {
+  margin: 0;
+  padding: 0;
+}
+.boot-data-windows .top {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 16px;
+}
+.boot-data-windows .top:after {
+  content: "©";
+  font-size: 10px;
+  position: relative;
+  top: -5px;
+  margin-left: 2px;
+}
+.boot-data-windows .mid {
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 36px;
+}
+.boot-data-windows .mid span {
+  font-size: 22px;
+  display: inline-block;
+  vertical-align: top;
+  color: #ff6821;
+  margin-top: -8px;
+}
+.boot-data-windows .logo2 .bottom {
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 30px;
+  margin-left: 5px;
+}
+@-webkit-keyframes loader {
+  0% {
+    transform: translate(-30px);
+  }
+  100% {
+    transform: translate(150px);
+  }
+}
+@keyframes loader {
+  0% {
+    transform: translate(-30px);
+  }
+  100% {
+    transform: translate(150px);
+  }
+}
+.boot-data .boot-footer {
+  position: absolute;
+  bottom: 20px;
+}/*# sourceMappingURL=boot-data.css.map */

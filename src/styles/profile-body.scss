@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import './boot-data';
+@import './loading-profile-body';
+
+$breakpoint-tablet: 768px;
+
 .profile-body {
   display: none;
+
   &_main-info {
     display: block;
     position: absolute;
@@ -19,13 +25,14 @@
     color: #3f3; // hacker green
     // font-family: 'VT323', monospace;
     width: 80vw;
-    height: 400px;
+    min-height: 400px;
     font-size: 30px;
     font-weight: bold;
 
     &_image {
-      height: 250pt;
-      float: right;
+      height: 200px;
+      width: 200px;
+      margin: 0 auto;
       // box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #17a2b8, 0 0 0.8rem #17a2b8, 0 0 2.8rem #17a2b8, inset 0 0 1.3rem #17a2b8;
       // border-radius: 20%;
     }
@@ -35,26 +42,41 @@
       color: #ffffff;
       text-align: left;
       color: #daf6ff;
-      text-shadow: 0 0 20px rgba(10, 175, 230, 1),  0 0 20px rgba(10, 175, 230, 0);
+
       &_timer {
-          letter-spacing: 0.05em;
-          font-size: 80px;
-          padding: 5px 0;
+        font-size: 80px;
+        padding: 5px 0;
       }
+
       &_header {
-          letter-spacing: 0.1em;
-          font-size: 24px;
-      
+        font-size: 22px;
       }
+
+      &_date {
+        font-size: 12px;
+        float: right;
+        @media (max-width: $breakpoint-tablet) {
+          display: block;
+          text-align: center;
+          float: none;
+          margin-top: 6px;
+        }
+      }
+
       &_description {
-          letter-spacing: 0.1em;
-          font-size: 12px;
-          padding: 20px 0 0;
-      } 
+        font-size: 14px;
+        padding: 20px 0 0;
+        list-style: unset;
+
+        li {
+          margin-top: 10px;
+        }
+      }
+
       &_description_date {
-            font-size: 12px;
-            font-weight: bold;
-          }
+        font-size: 12px;
+        font-weight: bold;
+      }
     }
 
     &_image-colored {
@@ -69,14 +91,268 @@
   &_work-items {
     @extend .profile-body_main-info;
     background: #0f3854;
-    background: radial-gradient(ellipse at center,  #0a2e38  0%, #000000 70%);
+    background: radial-gradient(ellipse at center, #0a2e38 0%, #000000 70%);
   }
 
-  
+  &_achievments {
+    @extend .profile-body_main-info;
+    background: #0f3854;
+    background: radial-gradient(ellipse at center, #0a2e38 0%, #000000 70%);
+    height: 200px;
+    top: unset;
+    bottom: 25px;
+    min-height: unset;
+  }
 }
+
 
 .container {
   width: 85%;
   margin: 0 auto;
 }
 
+
+#projects {
+  @extend .profile-body;
+
+  #skills-container {
+    @extend .profile-body_main-info;
+    max-width: 500px;
+    width: unset;
+    margin: 60px auto;
+    padding: 0 30px;
+    left: calc(50% - 200px);
+    top: unset;
+
+    h4 {
+      font-size: 23px;
+      color: #fff;
+      margin: 10px;
+    }
+
+    .labels {
+      position: absolute;
+      z-index: 3;
+      right: 20px;
+      top: 20px;
+      float: right;
+      display: block;
+      font-size: 10px;
+      color: #daf6ff;
+
+     
+      .item {
+        .color {
+          width: 20px;
+          height: 4px;
+          margin-right: 10px;
+          display: inline-block;
+        }
+
+        .blueBlack {
+          background-color: #001651;
+        }
+
+        .green {
+          background-color: #1bb021;
+        }
+
+        .orange {
+          background-color: #fd7409;
+        }
+      }
+    }
+  }
+
+  #skills {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    @media (max-width: $breakpoint-tablet) {
+      width: 320px;
+    height: 320px;
+    }
+    margin: 90px auto;
+
+    
+
+    .profile {
+      width: 150px;
+      height: 150px;
+      position: absolute;
+      top: calc(50% - 75px);
+      left: calc(50% - 75px);
+      @media (max-width: $breakpoint-tablet) {
+        width: 120px;
+        height: 120px;
+        top: calc(50% - 60px);
+        left: calc(50% - 60px);
+      }
+      background-color: white;
+      z-index: 4;
+      border-radius: 50%;
+    }
+  }
+
+  .circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    animation: rotate 1s ease-out;
+  }
+
+
+  .animate {
+    -webkit-transition: 0.2s cubic-bezier(.74, 1.13, .83, 1.2);
+    -moz-transition: 0.2s cubic-bezier(.74, 1.13, .83, 1.2);
+    -o-transition: 0.2s cubic-bezier(.74, 1.13, .83, 1.2);
+    transition: 0.2s cubic-bezier(.74, 1.13, .83, 1.2);
+  }
+
+
+
+  .animate:hover {
+    transform: scale(1.1);
+    transform-origin: center center;
+  }
+
+  .projects-img {
+    width: 60px;
+    z-index: 4;
+  }
+  #team-projects-container {
+    background-color: #001651;
+    clip-path: polygon(50% 50%, 0 100%, 0 0, 100% 0);
+
+    .projects {
+      z-index: 5;
+      .team-project-1 {
+        position: absolute;
+        left: 200px;
+        top: 40px;
+      }
+
+      .team-project-2 {
+        position: absolute;
+        left: 100px;
+        top: 40px;
+      }
+
+      .team-project-3 {
+        position: absolute;
+        left: 30px;
+        top: 150px;
+      }
+    }
+  }
+
+  #individual-projects-container {
+    background-color: #1bb021;
+    clip-path: polygon(50% 50%, 100% 0, 100% 100%, 100% 100%);
+
+    .projects {
+      z-index: 5;
+      .individual-project-1 {
+        position: absolute;
+        left: 270px;
+        top: 100px;
+      }
+
+      .individual-project-2 {
+        position: absolute;
+        left: 270px;
+        top: 190px;
+      }
+
+    }
+  }
+
+  #academic-projects-container {
+    background-color: #fd7409;
+    clip-path: polygon(50% 50%, 0 100%, 100% 100%);
+
+    .projects {
+      z-index: 5;
+
+      .acadmeic-project-1 {
+        position: absolute;
+        left: 100px;
+        top: 270px;
+      }
+
+      .acadmeic-project-2 {
+        position: absolute;
+        left: 200px;
+        top: 270px;
+      }
+
+    }
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(-360deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+
+  }
+
+  @keyframes scale {
+    0% {
+
+      transform: scale(0.5);
+      transform-origin: center center;
+    }
+
+    100% {
+      transform: scale(1);
+      transform-origin: center center;
+    }
+
+  }
+}
+
+#tech-skills {
+  @extend .profile-body;
+
+  #tech-skills-container {
+    @extend .profile-body_main-info;
+    color: #fff;
+
+    h3 {
+      font-size: 23px;
+    }
+
+    h4 {
+      font-size: 16px;
+    }
+
+    li {
+      img {
+        width: 20px;
+        display: inline;
+        margin-top: -9px;
+      }
+
+      .skill-progress {
+        font-size: 35px;
+        @media (max-width: $breakpoint-tablet) {
+          font-size: 30px;
+        }
+        display: inline;
+      }
+
+      .clicked {
+        color: rgba(10, 175, 230, 1);
+        text-shadow: 0 0 5px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+      }
+    }
+
+
+
+  }
+}

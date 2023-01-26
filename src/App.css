@@ -1,1 +1,9 @@
 @import './styles/profile-body';
+@import './styles/boot-data';
+.root{
+    visibility: hidden;
+}
+
+canvas {
+    visibility: hidden;
+}

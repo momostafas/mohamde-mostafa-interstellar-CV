@@ -1,0 +1,173 @@
+@keyframes blink-caret {
+  50% {
+    color: black;
+  }
+}
+// @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+* {
+  box-sizing: unset !important;
+}
+.boot-data {
+  color: #7b7b7b;
+  font-size: 20px;
+  font-family: cursive;
+  .DetectingIDE {
+    margin-left: 30px;
+    tbody {
+      tr {
+        td {
+          &:nth-child(1) {
+            width: 340px;
+          }
+          &:nth-child(2) {
+            width: 70px;
+          }
+        
+        }
+      }
+    }
+  }
+
+  &-second-page {
+    display: none;
+    margin-top: 30px;
+    &-system-configurations-table {
+      border: white double 4px;
+      padding: 10px;
+      table {
+        table-layout: auto;
+        width: 100%;
+      }
+    }
+
+    &-device-table {
+      margin-top: 100px;
+      padding: 10px;
+
+      table {
+        table-layout: auto;
+        width: 100%;
+      }
+
+      &-blink_char {
+        animation: blink-caret 1s infinite;
+      }
+    }
+  }
+
+  &-windows {
+    display: none;
+    color: #fff;
+    .window {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      $logo-width: 160px;
+      $logo-radius: 50px;
+      .microsoft-logo {
+        width: $logo-width;
+        height: 168px;
+      }
+      .square {
+        width: calc(($logo-width / 2) - 5px) ;
+        height: calc(($logo-width / 2) - 5px) ;
+        margin: 0 5px 5px 0;
+        float: left;
+      }
+      .square.red {
+        background-color: #f35325;
+      }
+      .square.green {
+        background-color: #81bc06;
+      }
+      .square.blue {
+        background-color: #05a6f0;
+      }
+      .square.yellow {
+        background-color: #ffba08;
+      }
+    }
+    .container {
+      margin-top: 30px;
+      width: 150px;
+      height: 10px;
+      border: 2px solid #b2b2b2;
+      border-radius: 7px;
+      margin: 0 auto;
+      padding: 2px 1px;
+      overflow: hidden;
+      font-size: 0;
+    }
+    .windows-box {
+      width: 9px;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        #2838c7 0%,
+        #5979ef 17%,
+        #869ef3 32%,
+        #869ef3 45%,
+        #5979ef 59%,
+        #2838c7 100%
+      );
+      display: inline-block;
+      margin-right: 2px;
+      animation: loader 2s infinite;
+      animation-timing-function: linear;
+      box-sizing: unset;
+    }
+    .logo2 {
+      width: 220px;
+      margin: 50px auto;
+    }
+    .logo2 p {
+      margin: 0;
+      padding: 0;
+    }
+    .top {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 16px;
+    }
+    .top:after {
+      content: '\00a9';
+      font-size: 10px;
+      position: relative;
+      top: -5px;
+      margin-left: 2px;
+    }
+    .mid {
+      font-size: 46px;
+      font-weight: 700;
+      line-height: 36px;
+    }
+    .mid span {
+      font-size: 22px;
+      display: inline-block;
+      vertical-align: top;
+      color: #ff6821;
+      margin-top: -8px;
+    }
+    .logo2 .bottom {
+      font-size: 30px;
+      font-weight: 300;
+      line-height: 30px;
+      margin-left: 5px;
+    }
+    @keyframes loader {
+      0% {
+        transform: translate(-30px);
+      }
+      100% {
+        transform: translate(150px);
+      }
+    }
+  }
+  .boot-footer {
+    position: absolute;
+    bottom: 20px;
+  }
+}

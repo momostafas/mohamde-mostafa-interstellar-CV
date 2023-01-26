@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: black;
+  overflow-y: hidden;
 }
 
 code {
@@ -12,3 +14,8 @@ code {
     monospace;
 }
 @import './styles/profile-body';
+@import './styles/boot-data';
+
+canvas {
+  visibility: hidden;
+}

@@ -1,126 +1,126 @@
 import { useEffect } from 'react';
+import ReactDOM from 'react-dom'
 
 import * as THREE from 'three';
-// import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-// import { VOXLoader } from 'three/examples/jsm/loaders/VOXLoader';
+import * as $ from 'jquery';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 import SceneInit from './lib/SceneInit';
-import { TWEEN } from 'three/examples/jsm/libs/tween.module.min';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-import { Text3DFacade } from 'troika-3d-text';
-import { TextMesh } from 'troika-3d-text/dist/troika-3d-text.esm';
-import { MeshBasicMaterial } from 'three';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
+import { items, achievements } from './lib/data';
+import { TWEEN } from 'https://unpkg.com/three@0.139.0/examples/jsm/libs/tween.module.min.js';
+import typer from 'typer-js';
 
-import $ from 'jquery';
 
 function App() {
   useEffect(() => {
     const main = new SceneInit('myThreeJsCanvas');
     main.initialize();
     main.animate();
+    let loaded = false;
+    setTimeout(() => {
+      loaded = true;
+    }, 10500);
+
+    ReactDOM.render(
+      <div>
+        {items.map((item, index) => {
+          return (
+            <div className="profile-body" id={`profile-body-${index}`} key={`body-${index}`}>
+              <div className="profile-body_work-items" style={{ width: "80%" }}>
+                <div className="container mt-2 mb-5" style={{ height: "inherit" }}>
+                  <img id="profile-body_main-info_image" className="profile-body_main-info_image" src={item.img} />
+                  <div className="col-12">
+
+                    <div className="profile-body_main-info_text" style={{ height: "max-content" }}>
+                      <p className="profile-body_main-info_text_header">
+                        {item.position}
+                        <span className="profile-body_main-info_text_date" >
+                          {item.date}
+                        </span>
+                      </p>
+                      <ul className="profile-body_main-info_text_description">
+                        {item.description.map((desc) => {
+                          return (<li key={desc}>
+                            {desc}
+                          </li>)
+
+                        })}
+                      </ul>
+
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          );
+        })}
+      </div>
+      , document.getElementById('profile'));
+
+    ReactDOM.render(
+      <div>
+        {achievements.map((item, index) => {
+          return (
+            <div className="profile-body" id={`profile-achievments-${index}`} key={`achievments-${index}`}>
+              <div className="profile-body_work-items profile-body_achievments" style={{ width: "80%" }}>
+                <div className="container" style={{ height: "inherit" }}>
+                  <div className="row justify-content-space-between align-items-center" style={{ height: "inherit" }}>
+                    <div className="profile-body_main-info_text" style={{ height: "max-content" }}>
+
+                      <span className="profile-body_main-info_text_description" id="profile-body_achievments_text_description">
+                        {item.title}
+                      </span>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      , document.getElementById('profile-achievments'));
+
+
 
     // be sure to call sync() after all properties are set to update the rendering:
     var endurance;
+    var tars;
     const glftLoader = new GLTFLoader();
     const fbxLoader = new FBXLoader();
     var flyingAction = null;
     var saluteAction = null;
     var astronautScene = null;
-    const items = [
-      {
-        angle: 0.002,
-        position: 'Software Developer at almentor',
-        date: 'Aug 2021 - Current',
-        img: './assets/images/almentor.png',
-        description:
-          'part-time, Front end developer using angular 10 for 6 months and .net backend developer using .net',
-        animation: 'none',
-      },
-      {
-        angle: 0.002,
-        position: `Private in Egyptian Army`,
-        date: 'Oct 2021 - Dec 2022',
-        img: './assets/images/nozom.png',
-        description:
-          'Front end developer using angular 10 for 6 months and .net backend developer using .net (Sep 2021- Current)',
-        animation: 'salute',
-      },
-      {
-        angle: 0.002,
-        position: 'Software Engineer at Con|Tour',
-        date: 'Oct 2020- Apr 2022',
-        img: './assets/images/contour.png',
-        animation: 'none',
-      },
-      {
-        angle: 0.002,
-        position: 'Front end developer at Schoolia',
-        date: 'Aug 2021 - Current',
-        img: './assets/images/schoolia.png',
-        animation: 'none',
-      },
-      {
-        angle: 0.002,
-        position: 'Front end developer at Masarat Misr',
-        date: 'Aug 2021 - ',
-        img: './assets/images/Masarat.png',
-        animation: 'none',
-      },
-      {
-        angle: 0.002,
-        position: 'Full Stack developer at ICareer',
-        date: 'Aug 2021 - Current',
-        img: './assets/images/icareer.png',
-        animation: 'none',
-      },
-      {
-        angle: 0.002,
-        position: 'Front end developer at SubsBase',
-        date: 'Aug 2021 - Current',
-        img: './assets/images/subsbase.png',
-        animation: 'none',
-      },
-      {
-        angle: 0.002,
-        position: 'Front end developer at 04Egypt',
-        date: 'Aug 2021 - Current',
-        img: './assets/images/04Egypt.png',
-        animation: 'none',
-      },
-      {
-        angle: 0.002,
-        position: 'Software developer at Tafra',
-        date: 'Aug 2021 - Current',
-        img: './assets/images/tafra.png',
-        animation: 'none',
-      },
-    ];
-
-    const achievements = [
-      {
-        title: '',
-        images: ['gp.png'],
-      },
-      {
-        title: '',
-        images: ['gp.png'],
-      },
-      {
-        title: '',
-        images: ['gp.png'],
-      },
-      {
-        title: '',
-        images: ['gp.png'],
-      },
-    ];
 
     let itemIndex = -1; //intitalize with -1 so increment to start with index 0
     const rotDegree = 0.0021;
     let scrolling = false;
+
+    function finishBooting() {
+      $('#boot-data').remove();
+      $('#loading-profile-body').css('visibility', 'visible');
+      typer('#loading-profile-body_main-info_text')
+        .line('Mohamed Mostafa Mostafa')
+        .line('Bachelor of Computer Engineering , NU(2021)')
+        .line('+4 years of expeirnce as front end developer')
+        .line('+13 projects done')
+        .line('1 Research Publication')
+        .end(true, function () {
+          $('.loading-profile-body_main-info_social-icons').css('visibility', 'visible');
+          $('#loading-profile-body_main-info_img').addClass('loading-profile-body_main-info_image-colored');
+  
+          setTimeout(() => {
+            $('.loading-profile-body_main-info').toggle('explode');
+          }, 2000);
+        });
+      $('#myThreeJsCanvas').css("visibility", "visible");
+    }
+
 
     let tesseractTexture = new THREE.TextureLoader().load(
       '../../assets/tesseract/textures/material.png'
@@ -134,7 +134,7 @@ function App() {
         map: itemTexture,
       });
       return itemMaterial;
-    }); 
+    });
 
     let tesseractBoxMaterial = new THREE.MeshPhongMaterial({
       map: tesseractTexture,
@@ -146,21 +146,20 @@ function App() {
     glftLoader.load('./assets/shiba/scene.gltf', (gltfScene) => {
       endurance = gltfScene.scene;
 
-      // console.log(endurance);
       endurance.rotation.x = (90 * Math.PI) / 180;
       endurance.position.set(-25, -25, -100);
       main.scene.add(endurance);
     });
 
-    const bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(window.innerWidth, window.innerHeight),
-      1.5,
-      0.4,
-      0.85
-    );
+    glftLoader.load('./assets/tars/scene.gltf', (gltfScene) => {
+      tars = gltfScene.scene;
+
+      tars.position.set(0, -800, 0);
+      tars.scale.set(5, 5, 5);
+      main.scene.add(tars);
+    });
 
     function createTesseractUnit(faces, boxWidth, boxHeight) {
-      var item = items[Math.floor(Math.random()*items.length)];
 
       let BoxGeometry = new THREE.BoxGeometry(boxWidth, boxHeight, 0);
       const box = new THREE.Mesh(BoxGeometry, tesseractTextures[0]);
@@ -171,8 +170,8 @@ function App() {
           index % 2
             ? 0
             : index > faces / 2
-            ? box.position.x - boxWidth
-            : box.position.x + boxWidth,
+              ? box.position.x - boxWidth
+              : box.position.x + boxWidth,
           index % 2
             ? index > faces / 2
               ? box.position.y - boxHeight
@@ -232,14 +231,17 @@ function App() {
         }
       }
 
-      let tesseractCoreBox = creatreTesseractScene(6, unitLength * 1.5);
-      tesseractCoreBox.name = 'core';
-      tesseractCoreBox.position.set(
-        (cubeLength * unitLength * 3) / 2 - unitLength * 1.5,
-        cubeLength * unitLength * 3,
-        (cubeLength * unitLength * 3) / 2 - unitLength * 1.5
-      );
-      group.add(tesseractCoreBox);
+
+      for (let coreIndex = 0; coreIndex < achievements.length; coreIndex++) {
+        let tesseractCoreBox = creatreTesseractScene(6, unitLength * 1.5);
+        tesseractCoreBox.name = 'core';
+        tesseractCoreBox.position.set(
+          (cubeLength * unitLength * 3) / 2 - unitLength * 1.5,
+          cubeLength * unitLength * 3 + (coreIndex * unitLength * 3),
+          (cubeLength * unitLength * 3) / 2 - unitLength * 1.5
+        );
+        group.add(tesseractCoreBox);
+      }
       return group;
     }
 
@@ -256,15 +258,14 @@ function App() {
     }
 
     function animateImage(image, position, i, j, l) {
-      image.rotation.y = i % 2 ? Math.PI / 2 : 0;
-      image.position.x =
-        i % 2 ? (i < 2 ? position.x + 30 : position.x - 30) : image.position.x;
-      image.position.z =
-        i % 2 ? image.position.z : i < 2 ? position.z + 30 : position.z - 30;
+      image.position.y += (60 * i)
+      image.position.z = position.z - 30 - 300;
+      image.position.x = position.x;
     }
 
     function createBlackHole(r) {
-      const ringGeometry = new THREE.RingGeometry(r, 30, 30);
+      const ringGeometry = new THREE.RingGeometry(r, r * 1.5, r * 1.5);
+      const ring2Geometry = new THREE.RingGeometry(r, r * 2.25, r * 2.25);
       let sunTexture = new THREE.TextureLoader().load(
         `../../assets/textures/sun.png`
       );
@@ -272,28 +273,27 @@ function App() {
         map: sunTexture,
         side: THREE.DoubleSide,
       });
-  
-      const sphereGeometry = new THREE.SphereGeometry(r, 30, 30);
-      const halfsphereGeometry = new THREE.SphereGeometry(r, 90, 90, 4.6, 3, );
+
+      const sphereGeometry = new THREE.SphereGeometry(r, r * 1.5, r * 1.5);
       const sphereMaterial = new THREE.MeshBasicMaterial({
         color: 0x000000,
         side: THREE.DoubleSide,
       });
       const ring = new THREE.Mesh(ringGeometry, sunMaterial);
-      const ring2 = new THREE.Mesh(ringGeometry, sunMaterial);
+      const ring2 = new THREE.Mesh(ring2Geometry, sunMaterial);
       const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-      const halfsphere = new THREE.Mesh(halfsphereGeometry, sunMaterial);
-      ring2.rotation.y += (80  * Math.PI) / 180 ;
+      ring2.rotation.y += (70 * Math.PI) / 180;
+      ring2.rotation.x += (80 * Math.PI) / 180;
       let group = new THREE.Group();
       group.rotation.z += Math.PI / 2;
 
-      group.add(ring, ring2, sphere, halfsphere)
+      group.add(ring, ring2, sphere)
       return group;
     }
 
     let item = createFullTesseract(2, 20);
     main.scene.add(item);
-    item.position.set(0, 500, 0);
+    item.position.set(0, -500, -300);
     const coreItem = item.children.filter((i) => i.name == 'core')[0];
 
     function sumPositions(...objs) {
@@ -319,73 +319,108 @@ function App() {
     });
 
 
-    let blackhole = createBlackHole(20);
-    blackhole.position.set(0, 100, 0);
+    let blackhole = createBlackHole(40);
+    blackhole.position.set(0, -150, -200);
     main.scene.add(blackhole);
+
+    let played = false;
+
+    var audio = new Audio('../../assets/audio/Interstellar Main Theme.mp3');
 
     window.addEventListener(
       'wheel',
       async function (e) {
+        // if (!played) {
+        //   audio.play();
+        // }
         if (itemIndex < items.length - 1) {
           if (e.deltaY > 0 && !scrolling) {
             //scrolling down
             scrolling = true;
-            $('#profile-body').fadeOut();
+            $('.profile-body').fadeOut();
             itemIndex++;
             if (itemIndex == 0) {
-              await reachEndurance();
-              showRectangle(items[itemIndex]);
+              await reachEndurance(1500);
+              showRectangle(itemIndex);
             } else {
               if (items[itemIndex - 1].animation != 'none') {
                 await playAnimation(saluteAction).then(() => {
                   moveForward().then(() => {
-                    showRectangle(items[itemIndex]);
+                    showRectangle(itemIndex);
                   });
                 });
               } else {
                 await moveForward();
-                showRectangle(items[itemIndex]);
+                showRectangle(itemIndex);
               }
             }
           } else if (e.deltaY < 0 && itemIndex > 0 && !scrolling) {
             scrolling = true;
-            $('#profile-body').fadeOut();
+            $('.profile-body').fadeOut();
             itemIndex--;
             if (items[itemIndex].animation != 'none') {
               await moveBackward().then(() => {
                 playAnimation(saluteAction).then(() => {
-                  showRectangle(items[itemIndex]);
+                  showRectangle(itemIndex);
                 });
               });
             } else {
               await moveBackward();
-              showRectangle(items[itemIndex]);
+              showRectangle(itemIndex);
             }
           }
         } else {
-          if (e.deltaY > 0 && !scrolling ) {
+          if (e.deltaY > 0 && !scrolling) {
             scrolling = true;
-            $('#profile-body').fadeOut();
+            $('.profile-body').fadeOut();
             if (itemIndex == items.length - 1) {
-              await reachBlackHole();
-              scrolling = false;
+              audio.pause();
+              await reachBlackHole(2000);
+              await reachTesseract(1000);
+              // audio.play();
+              showRectangleAchievments(0)
               itemIndex++;
-              console.log('sc', scrolling, itemIndex);
-
-
             }
-            else  {
-              console.log('ok');
-             await moveForwardTesseract(itemIndex - items.length);
-             console.log('ok');
-             scrolling = false;
-             itemIndex++;
-
-
+            else {
+              if (itemIndex < items.length + achievements.length - 1) {
+                await moveForwardTesseract(itemIndex - items.length + 1, 900);
+                await showRectangleAchievments(itemIndex - items.length + 1);
+                itemIndex++;
+              }
+              else {
+                if (itemIndex < items.length + achievements.length) {
+                  await reachTars(3000);
+                  setTimeout(() => {
+                    showRectangleProjects();
+                    itemIndex++;
+                  }, 500);
+                }
+                else if (itemIndex < items.length + achievements.length + 1) {
+                  $('#projects').fadeOut();
+                  setTimeout(() => {
+                    showRectangleTechSkills();
+                    itemIndex++;
+                  }, 500);
+                }
+              }
             }
           }
-          
-          
+          else if (e.deltaY < 0 && !scrolling) {
+            scrolling = true;
+            $('.profile-body').fadeOut();
+            if (itemIndex == items.length - 1) {
+              audio.pause();
+              await reachBlackHole(2000);
+              await reachEndurance(1500);
+              // audio.play();
+              itemIndex--;
+            }
+            else {
+              await moveForwardTesseract(itemIndex - items.length - 1, 900);
+              await showRectangleAchievments(itemIndex - items.length - 1)
+              itemIndex--;
+            }
+          }
         }
       },
       true
@@ -405,44 +440,39 @@ function App() {
       });
     }
 
-    function reachEndurance() {
+    function reachEndurance(speed) {
       return new Promise((resolve, reject) => {
-        const tweenInterval = setInterval(() => {
-          var astronautMovment = new TWEEN.Tween(astronautScene.position)
-            .to(
-              {
-                x: -50,
-                y: -30,
-                z: -30,
-              },
-              5
-            )
-            .start();
-          var astronautRotation = new TWEEN.Tween(astronautScene.rotation)
-            .to(
-              {
-                y: Math.PI * 0.85,
-              },
-              5
-            )
-            .start();
-          var cameraMovement = new TWEEN.Tween(main.camera.position)
-            .to(
-              {
-                x: -50,
-                y: -25,
-                z: 0,
-              },
-              5
-            )
-            .start();
+        new TWEEN.Tween(astronautScene.position)
+          .to(
+            {
+              x: -50,
+              y: -35,
+              z: -30,
+            },
+            speed
+          )
+          .start();
 
-          TWEEN.update();
-        }, 1);
-        setTimeout(() => {
-          clearInterval(tweenInterval);
-          resolve(true);
-        }, 5000);
+        new TWEEN.Tween(astronautScene.rotation)
+          .to(
+            {
+              y: Math.PI * 0.85,
+            },
+            speed
+          )
+          .start();
+        new TWEEN.Tween(main.camera.position)
+          .to(
+            {
+              x: -50,
+              y: -25,
+              z: 0,
+            },
+            speed
+          ).onComplete(e => {
+            resolve(true)
+          })
+          .start()
       });
     }
 
@@ -470,117 +500,135 @@ function App() {
       });
     }
 
-    function moveForwardTesseract(num) {
+    function moveForwardTesseract(num, speed) {
       return new Promise((resolve, reject) => {
-        const tweenInterval = setInterval(() => {
-          var astronautRotation = new TWEEN.Tween(astronautScene.rotation)
-            .to(
-              {
-                y: (Math.PI  / 2) * (num +1),
-              },
-              3
-            )
-            .start();
-          var camRotation = new TWEEN.Tween(main.camera.rotation)
-            .to(
-              {
-                y: (Math.PI  / 2) * (num +1),
-              },
-              3
-            )
-            .start();
-  
-        }, 1);
-        setTimeout(() => {
-          clearInterval(tweenInterval);
-          resolve(true);
-        }, 3000);
+
+        let target = -500 + 225 - (60 * (num));
+        let cameraTaget = -500 + 230 - (60 * (num))
+        new TWEEN.Tween(astronautScene.position)
+          .to(
+            {
+              y: target,
+            },
+            speed
+          )
+          .start();
+        new TWEEN.Tween(main.camera.position)
+          .to(
+            {
+              y: cameraTaget,
+            },
+            speed
+          )
+          .start().onComplete(e => {
+            resolve(true)
+          });
       });
     }
 
-    function showRectangle(item) {
-      $('#profile-body_main-info_text_header').text(item.position);
-      $('#profile-body_main-info_text_description').text(item.description);
-      $('#profile-body_main-info_text_description_date').text(`(${item.date})`);
-      $('#profile-body_main-info_image').attr('src', item.img);
-      $('#profile-body').fadeIn();
+    function showRectangleAchievments(num) {
+      const reversedindex = achievements.length - num - 1;
+      $(`#profile-achievments-${reversedindex}`).fadeIn();
       scrolling = false;
     }
 
-    function calculateArmyDays() {}
+    function showRectangle(index) {
+      $(`#profile-body-${index}`).fadeIn();
+      scrolling = false;
+    }
 
-    function reachBlackHole() {
+    function reachBlackHole(speed) {
       return new Promise((resolve, reject) => {
-        const tweenInterval = setInterval(() => {
-          var astronautMovment = new TWEEN.Tween(astronautScene.position)
-            .to(
-              {
-                x: 0,
-                y: 100,
-                z: 20,
-              },
-              5
-            )
-            .start();
+        var astronautMovment = new TWEEN.Tween(astronautScene.position)
+          .to(
+            {
+              x: 0,
+              y: -150,
+              z: -180,
+            },
+            speed
+          )
+          .start();
 
-          var cameraMovement = new TWEEN.Tween(main.camera.position)
-            .to(
-              {
-                x: 0,
-                y: 100,
-                z: 60,
-              },
-              5
-            )
-            .start();
+        var cameraMovement = new TWEEN.Tween(main.camera.position)
+          .to(
+            {
+              x: 0,
+              y: -150,
+              z: -140,
+            },
+            speed
+          ).onComplete(e => {
+            resolve(true)
+          })
+          .start();
+      }, 1);
 
-          TWEEN.update();
-        }, 1);
+    }
 
-        setTimeout(() => {
-          
-          clearInterval(tweenInterval);
-          let tweenInterval2 = setInterval(() => {
-            var astronautMovment = new TWEEN.Tween(astronautScene.position)
-              .to(
-                {
-                  x: 30,
-                  y: 610,
-                  z: 30,
-                },
-                3
-              )
-              .start();
-  
-            var cameraMovement = new TWEEN.Tween(main.camera.position)
-              .to(
-                {
-                  x: 30,
-                  y: 620,
-                  z: 50,
-                },
-                3
-              )
-              .start();
+    function reachTesseract(speed) {
+      return new Promise((resolve, reject) => {
+        var astronautMovment = new TWEEN.Tween(astronautScene.position)
+          .to(
+            {
+              x: 30,
+              y: -500 + 225,
+              z: -270,
+            },
+            speed
+          )
+          .start();
 
-              main.camera.rotateY += 1;
-              astronautScene.rotateY += 1;
-  
-            TWEEN.update();
-          }, 1);
-          setTimeout(() => {
-            clearInterval(tweenInterval);
-            
-            resolve(true);
-          }, 4000);
-        }, 6000);
-      });
+        var cameraMovement = new TWEEN.Tween(main.camera.position)
+          .to(
+            {
+              x: 30,
+              y: -500 + 230,
+              z: -250,
+            },
+            speed
+          ).onComplete(e => {
+            resolve(true)
+          })
+          .start();
+      }, 1);
+
+    }
+
+    function reachTars(speed) {
+      return new Promise((resolve, reject) => {
+
+        var cameraMovement = new TWEEN.Tween(main.camera.position)
+          .to(
+            {
+              x: 0,
+              y: -800,
+              z: 50,
+            },
+            speed
+          ).onComplete(e => {
+            resolve(true)
+          })
+          .start();
+      }, 1);
+
+    }
+
+    function showRectangleProjects() {
+      $(`#projects`).fadeIn();
+      scrolling = false;
+    }
+
+    function showRectangleTechSkills() {
+      $(`#tech-skills`).fadeIn();
+      scrolling = false;
     }
 
     const loader = new FBXLoader();
     loader.load('./assets/astronaut/test.fbx', function (astronaut) {
       loader.load('./assets/astronaut/Salute.fbx', function (salute) {
         loader.load('./assets/astronaut/Flying.fbx', function (flying) {
+        
           astronautScene = astronaut;
           astronaut.position.set(0, -5, 40);
 
@@ -609,11 +657,14 @@ function App() {
       if (main.mixer) {
         main.mixer.update(mixerUpdateDelta);
       }
+      TWEEN.update();
 
       requestAnimationFrame(animate);
     };
     animate();
   }, []);
+
+
 
   return (
     <div>
